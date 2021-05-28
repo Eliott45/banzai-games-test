@@ -338,6 +338,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc544bd28f3e24948843ba05bfbffd4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  def:
+    type: 0
+    projectilePrefab: {fileID: 0}
+    damageOnHit: 50
+    delayBetweenShots: 0
+    velocity: 20
+  collar: {fileID: 0}
 --- !u!1 &1881530050494979620
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,7 +362,7 @@ GameObject:
   - component: {fileID: 5765047205809076857}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

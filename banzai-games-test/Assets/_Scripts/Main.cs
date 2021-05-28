@@ -20,5 +20,14 @@ namespace _Scripts
                 WEAP_DICT[def.type] = def;
             }
         }
+        
+        /// <summary>
+        /// Статическая функция, возвращая WeaponDefinition из статического защищенного поля WEAP_DICT класса Main.
+        /// </summary>
+        public static WeaponDefinition GetWeaponDefinition(WeaponType wt)
+        {
+            // Проверить наличие указанного ключа в словаре
+            return WEAP_DICT.ContainsKey(wt) ? WEAP_DICT[wt] : new WeaponDefinition();
+        }
     }
 }

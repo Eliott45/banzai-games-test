@@ -10,7 +10,8 @@ namespace _Scripts
     public enum WeaponType {
         Shell, // Простой снаряд танка
         Rocket,
-        Mine
+        Mine,
+        MachineGun
     }
     
     /// <summary>
@@ -29,8 +30,14 @@ namespace _Scripts
 
     public class Weapon : MonoBehaviour
     {
-        private static Transform _projectileAnchor; // Пустой объект для для корректного отображения иерархии 
-
+        private static WeaponType _type;
+        
+        private static Transform _projectileAnchor; // Пустой объект для корректного отображения снарядов иерархии 
+        private PlayerShotController _shotController;
+        
+        public WeaponDefinition def;
+        public GameObject muzzle;
+        
         private void Start()
         {
             // Динамически создать точку привязки для всех снарядов
@@ -39,18 +46,64 @@ namespace _Scripts
                 _projectileAnchor = go.transform;
             }  
             
-            var rootGO = transform.root.gameObject;
-            if(rootGO.GetComponent<PlayerShotController>() != null) {
-                rootGO.GetComponent<PlayerShotController>().fireDelegate += Fire;
-            }
+            _shotController = gameObject.GetComponent<PlayerShotController>();
+            if (_shotController == null) return;
+            SetType(_shotController.type);
+            _shotController.FireDelegate += Fire;
+        }
+
+        private WeaponType Type {
+            get => (_type);
+            set => SetType(value);
+        }
+
+        private void SetType(WeaponType wt) {
+            _type = wt;
+            def = Main.GetWeaponDefinition(_type);
+            muzzle = _shotController.muzzle;
         }
         
         /// <summary>
         /// Осуществляет выстрел.
         /// </summary>
-        private static void Fire()
+        private void Fire()
         {
-            Debug.Log("Shoot");
+            Projectile p;
+            
+            var vel = transform.forward * def.velocity;
+            
+            switch (_type)
+            {
+                case WeaponType.Shell:
+                    p = MakeProjectile();
+                    p.rigid.velocity = vel;
+                    break;
+                case WeaponType.Rocket:
+                    break;
+                case WeaponType.Mine:
+                    break;
+                case WeaponType.MachineGun:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
+
+        private Projectile MakeProjectile()
+        {
+            var go = Instantiate<GameObject>(def.projectilePrefab, _projectileAnchor, true);
+            if(gameObject.CompareTag("Player")) {
+                go.tag = "ProjectilePlayer";
+            }
+            
+            go.transform.position = muzzle.transform.position;
+            go.transform.rotation = muzzle.transform.rotation;
+            
+            var p = go.GetComponent<Projectile>();
+            
+            p.Type = Type;
+            return(p);
+        }
+        
     }
 }
