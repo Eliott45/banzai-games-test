@@ -8,9 +8,18 @@ namespace _Scripts
     /// Это перечисление всех возможных типов оружия танка.
     /// </summary>
     public enum WeaponType {
-        Shell, // Простой снаряд танка
-        MachineGun, // Пулемет
-        Rocket // Более мощный снаряд танка
+        /// <summary>
+        ///  Простой снаряд танка.
+        /// </summary>
+        Shell, 
+        /// <summary>
+        /// Пулемет выпускает 3 снаряда одновременно. 
+        /// </summary>
+        MachineGun, 
+        /// <summary>
+        /// Более мощный снаряд танка.
+        /// </summary>
+        Rocket,
     }
     
     /// <summary>
@@ -78,11 +87,21 @@ namespace _Scripts
                     p = MakeProjectile();
                     p.rigid.velocity = vel;
                     break;
-                case WeaponType.Rocket:
+                case WeaponType.MachineGun:
+                    // Снаряд летящий прямо
                     p = MakeProjectile();
                     p.rigid.velocity = vel;
+                    // Снаряд летящий вправо
+                    p = MakeProjectile();
+                    Transform transform1;
+                    (transform1 = p.transform).Rotate(0f,45f,0);
+                    p.rigid.velocity = transform1.forward * _def.velocity;  
+                    // Снаряд летящий влево
+                    p = MakeProjectile();
+                    (transform1 = p.transform).Rotate(0f,-45f,0);
+                    p.rigid.velocity = transform1.forward * _def.velocity;  
                     break;
-                case WeaponType.MachineGun:
+                case WeaponType.Rocket:
                     p = MakeProjectile();
                     p.rigid.velocity = vel;
                     break;

@@ -28,6 +28,7 @@ namespace _Scripts
 
         private void OnCollisionEnter(Collision other)
         {
+            if (other.collider.CompareTag("ProjectilePlayer")) return;
             Destroy(gameObject);
         }
     }
