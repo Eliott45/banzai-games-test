@@ -35,8 +35,7 @@ namespace _Scripts
         private static Transform _projectileAnchor; // Пустой объект для корректного отображения снарядов иерархии 
         private PlayerShotController _shotController; 
         
-        public float lastShotTime; // Время последнего выстрела
-        
+        private float _lastShotTime; // Время последнего выстрела
         private WeaponDefinition _def; 
         private GameObject _muzzle; // Дуло
         
@@ -71,7 +70,7 @@ namespace _Scripts
         /// </summary>
         private void Fire()
         {
-            if(Time.time - lastShotTime < _def.delayBetweenShots) return; // Если КД еще не прошло 
+            if(Time.time - _lastShotTime < _def.delayBetweenShots) return; // Если КД еще не прошло 
              
             Projectile p;
             
@@ -88,6 +87,8 @@ namespace _Scripts
                 case WeaponType.Mine:
                     break;
                 case WeaponType.MachineGun:
+                    p = MakeProjectile();
+                    p.rigid.velocity = vel;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -107,7 +108,7 @@ namespace _Scripts
             var p = go.GetComponent<Projectile>();
             
             p.Type = Type;
-            lastShotTime = Time.time;
+            _lastShotTime = Time.time;
             return(p);
         }
         

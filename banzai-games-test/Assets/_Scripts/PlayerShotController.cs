@@ -9,6 +9,7 @@ namespace _Scripts
         [Header("Set in Inspector")]
         public WeaponType type = WeaponType.Shell;
         public GameObject[] muzzles;
+        [SerializeField] private GameObject[] _towers;
         
         private Weapon _weapon;
         
@@ -18,6 +19,7 @@ namespace _Scripts
         private void Start()
         {
             _weapon = GetComponent<Weapon>();
+            _towers[(int)type].SetActive(true);
         }
 
         private void Update()
@@ -43,8 +45,9 @@ namespace _Scripts
         /// </summary>
         private void SwitchWeaponUp()
         {
+            _towers[(int)type].SetActive(false);
             if ((int)++type >= Enum.GetNames(typeof(WeaponType)).Length) type = 0;
-            _weapon.SetType(type);
+            SetWeapon();
         }
 
         /// <summary>
@@ -52,9 +55,18 @@ namespace _Scripts
         /// </summary>
         private void SwitchWeaponDown()
         {
+            _towers[(int)type].SetActive(false);
             if ((int)--type < 0) type = (WeaponType) Enum.GetNames(typeof(WeaponType)).Length - 1;
-            _weapon.SetType(type);
+            SetWeapon();
         }
         
+        /// <summary>
+        /// Устанавливает новое оружие.
+        /// </summary>
+        private void SetWeapon()
+        {
+            _towers[(int)type].SetActive(true);
+            _weapon.SetType(type);
+        }
     }
 }
