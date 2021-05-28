@@ -8,7 +8,7 @@ namespace _Scripts
         [Header("Set in Inspector")]
         [SerializeField] private Transform _target;
         [SerializeField] private float _smoothSpeed = 1f;
-        [SerializeField] private Vector3 _offset = new Vector3(2f,12f,2f);
+        [SerializeField] private Vector3 _offset = new Vector3(2f,12f);
         
         private void FixedUpdate ()
         {

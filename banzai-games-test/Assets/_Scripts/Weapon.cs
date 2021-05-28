@@ -21,22 +21,24 @@ namespace _Scripts
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class WeaponDefinition
     {
-        public WeaponType type = WeaponType.Shell;
-        public GameObject projectilePrefab;
-        public float damageOnHit = 50f;
-        public float delayBetweenShots = 0f;
+        public WeaponType type = WeaponType.Shell; // Тип оружия
+        public GameObject projectilePrefab; // Префаб снаряда
+        public float damageOnHit = 50f; // Урон от попадания
+        public float delayBetweenShots = 0f; // КД следующего выстрела
         public float velocity = 20f; // Скорость снаряда
     }
 
     public class Weapon : MonoBehaviour
     {
-        private static WeaponType _type;
+        private static WeaponType _type; // Текущий тип оружия 
         
         private static Transform _projectileAnchor; // Пустой объект для корректного отображения снарядов иерархии 
-        private PlayerShotController _shotController;
+        private PlayerShotController _shotController; 
         
-        public WeaponDefinition def;
-        public GameObject muzzle;
+        public float lastShotTime; // Время последнего выстрела
+        
+        private WeaponDefinition _def; 
+        private GameObject _muzzle;
         
         private void Start()
         {
@@ -46,6 +48,7 @@ namespace _Scripts
                 _projectileAnchor = go.transform;
             }  
             
+            // Получить тип установленного оружия
             _shotController = gameObject.GetComponent<PlayerShotController>();
             if (_shotController == null) return;
             SetType(_shotController.type);
@@ -59,8 +62,8 @@ namespace _Scripts
 
         private void SetType(WeaponType wt) {
             _type = wt;
-            def = Main.GetWeaponDefinition(_type);
-            muzzle = _shotController.muzzle;
+            _def = Main.GetWeaponDefinition(_type);
+            _muzzle = _shotController.muzzle; // Получить позицию дула для последующих выстрелов 
         }
         
         /// <summary>
@@ -68,9 +71,11 @@ namespace _Scripts
         /// </summary>
         private void Fire()
         {
+            if(Time.time - lastShotTime < _def.delayBetweenShots) return; // Если КД еще не прошло 
+             
             Projectile p;
             
-            var vel = transform.forward * def.velocity;
+            var vel = transform.forward * _def.velocity;
             
             switch (_type)
             {
@@ -91,17 +96,18 @@ namespace _Scripts
 
         private Projectile MakeProjectile()
         {
-            var go = Instantiate<GameObject>(def.projectilePrefab, _projectileAnchor, true);
+            var go = Instantiate<GameObject>(_def.projectilePrefab, _projectileAnchor, true);
             if(gameObject.CompareTag("Player")) {
                 go.tag = "ProjectilePlayer";
             }
             
-            go.transform.position = muzzle.transform.position;
-            go.transform.rotation = muzzle.transform.rotation;
+            go.transform.position = _muzzle.transform.position;
+            go.transform.rotation = _muzzle.transform.rotation;
             
             var p = go.GetComponent<Projectile>();
             
             p.Type = Type;
+            lastShotTime = Time.time;
             return(p);
         }
         

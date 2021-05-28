@@ -145,13 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc544bd28f3e24948843ba05bfbffd4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  def:
-    type: 0
-    projectilePrefab: {fileID: 0}
-    damageOnHit: 50
-    delayBetweenShots: 0
-    velocity: 20
-  muzzle: {fileID: 0}
+  lastShotTime: 0
 --- !u!1 &175246155
 GameObject:
   m_ObjectHideFlags: 0
@@ -1303,7 +1297,7 @@ MonoBehaviour:
   - type: 0
     projectilePrefab: {fileID: 2260179015518525968, guid: 43641b2d0ab4af344a1be3c5880ad77f, type: 3}
     damageOnHit: 50
-    delayBetweenShots: 2
+    delayBetweenShots: 1
     velocity: 20
 --- !u!114 &963194230
 MonoBehaviour:
@@ -1319,7 +1313,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target: {fileID: 114831738}
   _smoothSpeed: 1
-  _offset: {x: 2, y: 12, z: 2}
+  _offset: {x: 2, y: 12, z: 0}
 --- !u!1 &1148753656
 GameObject:
   m_ObjectHideFlags: 0
