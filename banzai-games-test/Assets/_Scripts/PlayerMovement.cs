@@ -15,7 +15,7 @@ namespace _Scripts
 
         private void Awake ()
         {
-            _rigid = GetComponent<Rigidbody> ();
+            _rigid = GetComponent<Rigidbody>();
         }
         
         private void Update ()
@@ -26,8 +26,8 @@ namespace _Scripts
         
         private void FixedUpdate ()
         {
-            Move ();
-            Turn ();
+            Move();
+            Turn();
         }
         
         /// <summary>
