@@ -7,7 +7,7 @@ namespace _Scripts
     {
         [Header("Set in Inspector")]
         public WeaponType type = WeaponType.Shell;
-        public GameObject muzzle;
+        public GameObject[] muzzles;
         
         public delegate void WeaponFireDelegate(); 
         public WeaponFireDelegate FireDelegate;

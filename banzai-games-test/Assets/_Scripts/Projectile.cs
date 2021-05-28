@@ -10,6 +10,8 @@ namespace _Scripts
         [Header("Set Dynamically")]
         public Rigidbody rigid;
 
+        public float damage;
+
         private void Awake()
         {
             rigid = GetComponent<Rigidbody>();

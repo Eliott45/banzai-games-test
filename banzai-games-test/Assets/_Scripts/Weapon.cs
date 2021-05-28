@@ -38,7 +38,7 @@ namespace _Scripts
         public float lastShotTime; // Время последнего выстрела
         
         private WeaponDefinition _def; 
-        private GameObject _muzzle;
+        private GameObject _muzzle; // Дуло
         
         private void Start()
         {
@@ -63,7 +63,7 @@ namespace _Scripts
         private void SetType(WeaponType wt) {
             _type = wt;
             _def = Main.GetWeaponDefinition(_type);
-            _muzzle = _shotController.muzzle; // Получить позицию дула для последующих выстрелов 
+            _muzzle = _shotController.muzzles[(int)wt]; // Получить позицию дула для последующих выстрелов 
         }
         
         /// <summary>
