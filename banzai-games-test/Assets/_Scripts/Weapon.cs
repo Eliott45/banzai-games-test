@@ -10,8 +10,7 @@ namespace _Scripts
     public enum WeaponType {
         Shell, // Простой снаряд танка
         Rocket,
-        Mine,
-        MachineGun
+        MachineGun // Пулемет
     }
     
     /// <summary>
@@ -35,7 +34,7 @@ namespace _Scripts
         private static Transform _projectileAnchor; // Пустой объект для корректного отображения снарядов иерархии 
         private PlayerShotController _shotController; 
         
-        private float _lastShotTime; // Время последнего выстрела
+        private float _lastShotTime = 0; // Время последнего выстрела
         private WeaponDefinition _def; 
         private GameObject _muzzle; // Дуло
         
@@ -63,6 +62,7 @@ namespace _Scripts
             _type = wt;
             _def = Main.GetWeaponDefinition(_type);
             _muzzle = _shotController.muzzles[(int)wt]; // Получить позицию дула для последующих выстрелов 
+            _lastShotTime = 0; // Сбросить КД выстрела 
         }
         
         /// <summary>
@@ -83,8 +83,8 @@ namespace _Scripts
                     p.rigid.velocity = vel;
                     break;
                 case WeaponType.Rocket:
-                    break;
-                case WeaponType.Mine:
+                    p = MakeProjectile();
+                    p.rigid.velocity = vel;
                     break;
                 case WeaponType.MachineGun:
                     p = MakeProjectile();
