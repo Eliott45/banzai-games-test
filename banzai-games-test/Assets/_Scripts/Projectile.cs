@@ -24,6 +24,10 @@ namespace _Scripts
             _type = eType;
             var def = Main.GetWeaponDefinition(_type);
         }
-        
+
+        private void OnCollisionEnter(Collision other)
+        {
+            Destroy(gameObject);
+        }
     }
 }

@@ -1214,6 +1214,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1304,6 +1305,21 @@ MonoBehaviour:
     damageOnHit: 50
     delayBetweenShots: 2
     velocity: 20
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d64855deffa579b44be77a8fb4e39c2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _target: {fileID: 114831738}
+  _smoothSpeed: 1
+  _offset: {x: 2, y: 12, z: 2}
 --- !u!1 &1148753656
 GameObject:
   m_ObjectHideFlags: 0
