@@ -60,7 +60,7 @@ namespace _Scripts
             set => SetType(value);
         }
 
-        private void SetType(WeaponType wt) {
+        public void SetType(WeaponType wt) {
             _type = wt;
             _def = Main.GetWeaponDefinition(_type);
             _muzzle = _shotController.muzzles[(int)wt]; // Получить позицию дула для последующих выстрелов 
