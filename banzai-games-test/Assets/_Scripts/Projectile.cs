@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace _Scripts
@@ -9,20 +8,22 @@ namespace _Scripts
         
         [Header("Set Dynamically")]
         public Rigidbody rigid;
-        
+
         private void Awake()
         {
             rigid = GetComponent<Rigidbody>();
         }
+        
 
         public WeaponType Type {
             get => (_type);
             set => SetType(value);
         }
 
-        private void SetType(WeaponType eType) {
+        private void SetType(WeaponType eType)
+        {
             _type = eType;
-            var def = Main.GetWeaponDefinition(_type);
+            Main.GetWeaponDefinition(_type);
         }
 
         private void OnCollisionEnter(Collision other)

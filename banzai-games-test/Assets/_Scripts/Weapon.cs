@@ -9,32 +9,31 @@ namespace _Scripts
     /// </summary>
     public enum WeaponType {
         Shell, // Простой снаряд танка
-        Rocket,
-        MachineGun // Пулемет
+        MachineGun, // Пулемет
+        Rocket // Более мощный снаряд танка
     }
     
     /// <summary>
     /// Класс WeaponDefinition позволяет настраивать свойства конкретного вида оружия. 
     /// </summary>
-    [System.Serializable]
+    [Serializable]
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class WeaponDefinition
     {
         public WeaponType type = WeaponType.Shell; // Тип оружия
         public GameObject projectilePrefab; // Префаб снаряда
         public float damageOnHit = 50f; // Урон от попадания
-        public float delayBetweenShots = 0f; // КД следующего выстрела
+        public float delayBetweenShots; // КД следующего выстрела
         public float velocity = 20f; // Скорость снаряда
+        public Color colorLight; // Цвет света от снаряда
     }
 
     public class Weapon : MonoBehaviour
     {
-        private static WeaponType _type; // Текущий тип оружия 
-        
         private static Transform _projectileAnchor; // Пустой объект для корректного отображения снарядов иерархии 
         private PlayerShotController _shotController; 
         
-        private float _lastShotTime = 0; // Время последнего выстрела
+        private float _lastShotTime; // Время последнего выстрела
         private WeaponDefinition _def; 
         private GameObject _muzzle; // Дуло
         
@@ -53,14 +52,11 @@ namespace _Scripts
             _shotController.FireDelegate += Fire;
         }
 
-        private WeaponType Type {
-            get => (_type);
-            set => SetType(value);
-        }
+        private static WeaponType Type { get; set; }
 
         public void SetType(WeaponType wt) {
-            _type = wt;
-            _def = Main.GetWeaponDefinition(_type);
+            Type = wt;
+            _def = Main.GetWeaponDefinition(Type);
             _muzzle = _shotController.muzzles[(int)wt]; // Получить позицию дула для последующих выстрелов 
             _lastShotTime = 0; // Сбросить КД выстрела 
         }
@@ -76,7 +72,7 @@ namespace _Scripts
             
             var vel = transform.forward * _def.velocity;
             
-            switch (_type)
+            switch (Type)
             {
                 case WeaponType.Shell:
                     p = MakeProjectile();
@@ -97,11 +93,12 @@ namespace _Scripts
 
         private Projectile MakeProjectile()
         {
-            var go = Instantiate<GameObject>(_def.projectilePrefab, _projectileAnchor, true);
+            var go = Instantiate(_def.projectilePrefab, _projectileAnchor, true);
             if(gameObject.CompareTag("Player")) {
                 go.tag = "ProjectilePlayer";
             }
-            
+
+            go.GetComponent<Light>().color = _def.colorLight;
             go.transform.position = _muzzle.transform.position;
             go.transform.rotation = _muzzle.transform.rotation;
             

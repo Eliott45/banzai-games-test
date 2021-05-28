@@ -153,7 +153,7 @@ GameObject:
   - component: {fileID: 173948400}
   m_Layer: 0
   m_Name: 'Training Target '
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -571,6 +571,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 243946932}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &346265393 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3030383435875021922, guid: aeb8120fed9943247b9c97cb15ab6143, type: 3}
+  m_PrefabInstance: {fileID: 1881530050447273810}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &346265396 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3224014015957045826, guid: aeb8120fed9943247b9c97cb15ab6143, type: 3}
@@ -1381,16 +1386,19 @@ MonoBehaviour:
     damageOnHit: 50
     delayBetweenShots: 1
     velocity: 20
-  - type: 2
+    colorLight: {r: 1, g: 0.44313726, b: 0, a: 0}
+  - type: 1
     projectilePrefab: {fileID: 1805174941946542218, guid: b776148dabd86da49a835e814b8299e9, type: 3}
     damageOnHit: 5
     delayBetweenShots: 0.2
     velocity: 40
-  - type: 1
+    colorLight: {r: 0.802902, g: 1, b: 0, a: 0}
+  - type: 2
     projectilePrefab: {fileID: 2260179015518525968, guid: 8d44a024b15168b4eaafdc676062fea4, type: 3}
     damageOnHit: 100
-    delayBetweenShots: 5
+    delayBetweenShots: 12
     velocity: 10
+    colorLight: {r: 1, g: 0.18039216, b: 0, a: 0}
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1904,9 +1912,17 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1881530050467599001, guid: aeb8120fed9943247b9c97cb15ab6143, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1881530050494979620, guid: aeb8120fed9943247b9c97cb15ab6143, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1881530050494979621, guid: aeb8120fed9943247b9c97cb15ab6143, type: 3}
+      propertyPath: m_Constraints
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1881530050494979624, guid: aeb8120fed9943247b9c97cb15ab6143, type: 3}
       propertyPath: m_RootOrder
@@ -1965,17 +1981,21 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5765047205809076857, guid: aeb8120fed9943247b9c97cb15ab6143, type: 3}
-      propertyPath: _towers.Array.data[2]
+      propertyPath: _towers.Array.data[1]
       value: 
       objectReference: {fileID: 6440950}
     - target: {fileID: 5765047205809076857, guid: aeb8120fed9943247b9c97cb15ab6143, type: 3}
+      propertyPath: _towers.Array.data[2]
+      value: 
+      objectReference: {fileID: 346265393}
+    - target: {fileID: 5765047205809076857, guid: aeb8120fed9943247b9c97cb15ab6143, type: 3}
       propertyPath: muzzles.Array.data[1]
       value: 
-      objectReference: {fileID: 380589773}
+      objectReference: {fileID: 1823601}
     - target: {fileID: 5765047205809076857, guid: aeb8120fed9943247b9c97cb15ab6143, type: 3}
       propertyPath: muzzles.Array.data[2]
       value: 
-      objectReference: {fileID: 1823601}
+      objectReference: {fileID: 380589773}
     - target: {fileID: 7558745698475047783, guid: aeb8120fed9943247b9c97cb15ab6143, type: 3}
       propertyPath: m_Name
       value: Tank_ToweLaser
