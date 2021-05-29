@@ -6,9 +6,11 @@ namespace _Scripts
     [RequireComponent(typeof(Weapon))]
     public class MediumTank : Enemy
     {
-        [Header("Set in Inspector: Medium Tank")] 
-        public WeaponType type = WeaponType.Shell;
+        [Header("Set in Inspector: Medium Tank")]
         public GameObject muzzle;
+        
+        [Header("Set options: Medium Tank")]
+        public WeaponType type = WeaponType.Shell;
         /// <summary>
         /// Уменьшить или увеличить стандартный урон.  
         /// </summary>
