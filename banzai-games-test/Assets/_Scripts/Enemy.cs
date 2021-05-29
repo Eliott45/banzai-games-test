@@ -5,15 +5,20 @@ namespace _Scripts
 {
     public class Enemy : MonoBehaviour
     {
-        [Header("Set in Inspector: Enemy")]
+        [Header("Set in Inspector: Enemy")] 
+        public WeaponType type = WeaponType.Shell;
+        public GameObject muzzle;
         [SerializeField] private float _health = 100f;
         [Range(0, 1f)][SerializeField] private float _armor;
         [SerializeField] private float _showDamageDuration = 0.35f; 
         
         private Color[] _originalColors;
         private Material[] _materials; // Все материалы игрового объекта и его потомков
-        private bool _showingDamage = false;
+        private bool _showingDamage;
         private float _damageDoneTime; //  Время прекращения отображения эффекта
+        
+        public delegate void WeaponFireDelegate(); 
+        public WeaponFireDelegate FireDelegate;
 
         private void Awake()
         {
@@ -26,6 +31,7 @@ namespace _Scripts
 
         private void Update()
         {
+            FireDelegate?.Invoke();
             if (_showingDamage && Time.time > _damageDoneTime) UnShowDamage();
         }
 

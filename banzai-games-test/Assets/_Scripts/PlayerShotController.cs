@@ -65,7 +65,7 @@ namespace _Scripts
         private void SetWeapon()
         {
             _towers[(int)type].SetActive(true);
-            _weapon.SetType(type);
+            _weapon.SetType(type, muzzle);
         }
     }
 }

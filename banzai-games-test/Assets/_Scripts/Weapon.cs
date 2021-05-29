@@ -40,8 +40,9 @@ namespace _Scripts
     public class Weapon : MonoBehaviour
     {
         private static Transform _projectileAnchor; // Пустой объект для корректного отображения снарядов иерархии 
-        private PlayerShotController _shotController; 
-        
+        private PlayerShotController _playerShotController;
+        private Enemy _enemyShotController;
+
         private float _lastShotTime; // Время последнего выстрела
         private WeaponDefinition _def; 
         private GameObject _muzzle; // Дуло
@@ -55,19 +56,26 @@ namespace _Scripts
             }  
             
             // Получить тип установленного оружия
-            _shotController = gameObject.GetComponent<PlayerShotController>();
-            if (_shotController == null) return;
-            SetType(_shotController.type);
-            _shotController.FireDelegate += Fire;
+            _playerShotController = gameObject.GetComponent<PlayerShotController>();
+            _enemyShotController = gameObject.GetComponent<Enemy>();
+            if (_playerShotController != null)
+            {
+                SetType(_playerShotController.type, _playerShotController.muzzle);
+                _playerShotController.FireDelegate += Fire;
+            }
+
+            if (_enemyShotController == null) return;
+            SetType(_enemyShotController.type, _enemyShotController.muzzle);
+            _enemyShotController.FireDelegate += Fire;
         }
 
         private static WeaponType Type { get; set; }
 
-        public void SetType(WeaponType wt) {
+        public void SetType(WeaponType wt, GameObject muzzle) {
             Type = wt;
             _def = Main.GetWeaponDefinition(Type);
             // _muzzle = _shotController.muzzle[(int)wt]; // Получить позицию дула для последующих выстрелов 
-            _muzzle = _shotController.muzzle;
+            _muzzle = muzzle;
             _lastShotTime = 0; // Сбросить КД выстрела 
         }
         
