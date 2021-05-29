@@ -58,6 +58,7 @@ namespace _Scripts
             // Получить тип установленного оружия
             _playerShotController = gameObject.GetComponent<PlayerShotController>();
             _enemyShotController = gameObject.GetComponent<Enemy>();
+            
             if (_playerShotController != null)
             {
                 SetType(_playerShotController.type, _playerShotController.muzzle);
@@ -66,7 +67,7 @@ namespace _Scripts
 
             if (_enemyShotController == null) return;
             SetType(_enemyShotController.type, _enemyShotController.muzzle);
-            _enemyShotController.FireDelegate += Fire;
+            _enemyShotController.FireDelegateEnemy += Fire;
         }
 
         private static WeaponType Type { get; set; }
@@ -90,7 +91,7 @@ namespace _Scripts
             
             var vel = transform.forward * _def.velocity;
             
-            switch (Type)
+            switch (_def.type)
             {
                 case WeaponType.Shell:
                     p = MakeProjectile();
@@ -122,17 +123,15 @@ namespace _Scripts
         private Projectile MakeProjectile()
         {
             var go = Instantiate(_def.projectilePrefab, _projectileAnchor, true);
-            if(gameObject.CompareTag("Player")) {
-                go.tag = "Projectile";
-            }
-
+            
+            go.tag = "Projectile";
             go.GetComponent<Light>().color = _def.colorLight;
             go.transform.position = _muzzle.transform.position;
             go.transform.rotation = _muzzle.transform.rotation;
             
             var p = go.GetComponent<Projectile>();
             
-            p.Type = Type;
+            p.Type = _def.type;
             _lastShotTime = Time.time;
             return(p);
         }

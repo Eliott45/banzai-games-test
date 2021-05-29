@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 namespace _Scripts
 {
@@ -27,6 +28,13 @@ namespace _Scripts
         {
             // Проверить наличие указанного ключа в словаре
             return WEAP_DICT.ContainsKey(wt) ? WEAP_DICT[wt] : new WeaponDefinition();
+        }
+        
+        /// <summary>
+        /// Перезапустить игру.
+        /// </summary>
+        public static void Restart() {
+            SceneManager.LoadScene("GameScene");
         }
     }
 }

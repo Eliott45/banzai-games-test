@@ -1,9 +1,10 @@
 using System;
+using UnityEditor;
 using UnityEngine;
 
 namespace _Scripts
 {
-    public class PlayerShotController : MonoBehaviour
+    public class PlayerShotController : MonoBehaviour 
     {
         [Header("Set in Inspector")]
         public WeaponType type = WeaponType.Shell;

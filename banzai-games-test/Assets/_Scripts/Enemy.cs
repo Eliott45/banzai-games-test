@@ -18,7 +18,7 @@ namespace _Scripts
         private float _damageDoneTime; //  Время прекращения отображения эффекта
         
         public delegate void WeaponFireDelegate(); 
-        public WeaponFireDelegate FireDelegate;
+        public WeaponFireDelegate FireDelegateEnemy;
 
         private void Awake()
         {
@@ -31,7 +31,7 @@ namespace _Scripts
 
         private void Update()
         {
-            FireDelegate?.Invoke();
+            FireDelegateEnemy?.Invoke();
             if (_showingDamage && Time.time > _damageDoneTime) UnShowDamage();
         }
 

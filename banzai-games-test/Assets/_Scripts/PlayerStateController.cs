@@ -2,8 +2,13 @@ using UnityEngine;
 
 namespace _Scripts
 {
-    public class PlayerMovement : MonoBehaviour
+    public class PlayerStateController : MonoBehaviour
     {
+        [Header("Set options of characteristics: ")] 
+        [SerializeField] private float _health = 100f;
+        [Range(0,1)]
+        [SerializeField] private float _armor = 0.5f;
+        
         [Header("Set options of movement:")]
         [SerializeField] private float _speed = 5f;             
         [SerializeField] private float _turnSpeed = 180f;
@@ -49,5 +54,35 @@ namespace _Scripts
             
             _rigid.MoveRotation (_rigid.rotation * turnRotation);
         }
+        
+        private void OnCollisionEnter(Collision other)
+        {
+            var otherGO = other.gameObject;
+            switch (otherGO.tag)
+            {
+                case "Projectile":
+                    var p = otherGO.GetComponent<Projectile>();
+                    TakeDamage(Main.GetWeaponDefinition(p.Type).damageOnHit);
+                    break;
+            }
+        }
+        
+        /// <summary>
+        /// Получить урон.
+        /// </summary>
+        /// <param name="damage">Входящий урон.</param>
+        private void TakeDamage(float damage)
+        {
+            if ((_health -= damage * (1f - _armor)) <= 0) Die();
+        }
+        
+        /// <summary>
+        /// Умереть.
+        /// </summary>
+        private static void Die()
+        {
+            Main.Restart();
+        }
+
     }
 }
