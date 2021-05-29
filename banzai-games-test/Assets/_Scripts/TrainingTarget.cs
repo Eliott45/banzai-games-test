@@ -12,7 +12,7 @@ namespace _Scripts
             var otherGO = other.gameObject;
             switch (otherGO.tag)
             {
-                case "ProjectilePlayer":
+                case "Projectile":
                     var p = otherGO.GetComponent<Projectile>();
                     TakeDamage(Main.GetWeaponDefinition(p.Type).damageOnHit);
                     break;

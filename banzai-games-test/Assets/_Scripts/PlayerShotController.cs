@@ -7,7 +7,7 @@ namespace _Scripts
     {
         [Header("Set in Inspector")]
         public WeaponType type = WeaponType.Shell;
-        public GameObject[] muzzles;
+        public GameObject muzzle; // public GameObject[] muzzles;
         [SerializeField] private GameObject[] _towers;
         
         private Weapon _weapon;

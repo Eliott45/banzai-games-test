@@ -66,7 +66,8 @@ namespace _Scripts
         public void SetType(WeaponType wt) {
             Type = wt;
             _def = Main.GetWeaponDefinition(Type);
-            _muzzle = _shotController.muzzles[(int)wt]; // Получить позицию дула для последующих выстрелов 
+            // _muzzle = _shotController.muzzle[(int)wt]; // Получить позицию дула для последующих выстрелов 
+            _muzzle = _shotController.muzzle;
             _lastShotTime = 0; // Сбросить КД выстрела 
         }
         
@@ -114,7 +115,7 @@ namespace _Scripts
         {
             var go = Instantiate(_def.projectilePrefab, _projectileAnchor, true);
             if(gameObject.CompareTag("Player")) {
-                go.tag = "ProjectilePlayer";
+                go.tag = "Projectile";
             }
 
             go.GetComponent<Light>().color = _def.colorLight;
