@@ -51,7 +51,7 @@ namespace _Scripts
         {
             // Динамически создать точку привязки для всех снарядов
             if(_projectileAnchor == null) {
-                var go = new GameObject("_ProjectileAnchor");
+                var go = new GameObject("ProjectileAnchor");
                 _projectileAnchor = go.transform;
             }  
             
