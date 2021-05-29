@@ -60,9 +60,13 @@ namespace _Scripts
             var otherGO = other.gameObject;
             switch (otherGO.tag)
             {
-                case "Projectile":
+                case "ProjectileEnemy":
                     var p = otherGO.GetComponent<Projectile>();
-                    TakeDamage(Main.GetWeaponDefinition(p.Type).damageOnHit);
+                    // Снижение или увеличение стандартного урона от снаряда
+                    TakeDamage(Main.GetWeaponDefinition(p.Type).damageOnHit * p.multiplication);
+                    break;
+                case "Enemy":
+                    TakeDamage(otherGO.GetComponent<Enemy>().damageGive);
                     break;
             }
         }

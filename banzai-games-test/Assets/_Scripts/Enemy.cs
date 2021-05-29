@@ -1,37 +1,49 @@
 using System;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace _Scripts
 {
+    [RequireComponent(typeof(NavMeshAgent))]
     public class Enemy : MonoBehaviour
     {
-        [Header("Set in Inspector: Enemy")] 
-        public WeaponType type = WeaponType.Shell;
-        public GameObject muzzle;
+        [Header("Set in Inspector: Enemy")]
+        public float damageGive = 10f; // Нанесение урона игроку при столкновении 
+        [SerializeField] private float _damageTake = 20f; // Получение урона при столкновении с игроком
         [SerializeField] private float _health = 100f;
         [Range(0, 1f)][SerializeField] private float _armor;
-        [SerializeField] private float _showDamageDuration = 0.35f; 
+        [SerializeField] private float _speed = 10f;
+        [SerializeField] private float _showDamageDuration = 0.35f;
+
+        [Header("Set Dynamically: Enemy")]
+        public NavMeshAgent agent;
+        public Transform player;
         
         private Color[] _originalColors;
         private Material[] _materials; // Все материалы игрового объекта и его потомков
         private bool _showingDamage;
         private float _damageDoneTime; //  Время прекращения отображения эффекта
-        
-        public delegate void WeaponFireDelegate(); 
-        public WeaponFireDelegate FireDelegateEnemy;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             _materials = Utils.GetAllMaterials(gameObject);
             _originalColors = new Color[_materials.Length];
             for (var i = 0; i < _materials.Length; i++){
                 _originalColors[i] = _materials[i].color;
             }
+
+            agent = GetComponent<NavMeshAgent>();
+            agent.speed = _speed;
+            player = GameObject.Find("Player").transform;
         }
 
-        private void Update()
+        protected virtual void Update()
         {
-            FireDelegateEnemy?.Invoke();
+            ChasePlayer();
+        }
+
+        protected void FixedUpdate()
+        {
             if (_showingDamage && Time.time > _damageDoneTime) UnShowDamage();
         }
 
@@ -44,9 +56,20 @@ namespace _Scripts
                     var p = otherGO.GetComponent<Projectile>();
                     TakeDamage(Main.GetWeaponDefinition(p.Type).damageOnHit);
                     break;
+                case "Player":
+                    TakeDamage(_damageTake);
+                    break;
             }
         }
-        
+
+        /// <summary>
+        /// Преследовать игрока.
+        /// </summary>
+        protected void ChasePlayer()
+        {
+            agent.SetDestination(player.position);
+        }
+
         /// <summary>
         /// Получить урон.
         /// </summary>

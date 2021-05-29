@@ -8,12 +8,15 @@ namespace _Scripts
         
         [Header("Set Dynamically")]
         public Rigidbody rigid;
+        /// <summary>
+        /// Уменьшить или увеличить стандартный урон от снаряда.  
+        /// </summary>
+        public float multiplication;
 
         private void Awake()
         {
             rigid = GetComponent<Rigidbody>();
         }
-        
 
         public WeaponType Type {
             get => (_type);

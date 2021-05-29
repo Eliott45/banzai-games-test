@@ -9,6 +9,9 @@ namespace _Scripts
         [Header("Set in Inspector")]
         public WeaponType type = WeaponType.Shell;
         public GameObject muzzle; // public GameObject[] muzzles;
+        /// <summary>
+        /// Танковые башни выступающие в роли графического вида оружия.
+        /// </summary>
         [SerializeField] private GameObject[] _towers;
         
         private Weapon _weapon;

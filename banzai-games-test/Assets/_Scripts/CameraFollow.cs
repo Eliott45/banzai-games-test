@@ -5,7 +5,7 @@ namespace _Scripts
     public class CameraFollow : MonoBehaviour
     {
         [Header("Set in Inspector")]
-        [SerializeField] private Transform _target;
+        [SerializeField] private Transform _target; // Объект за которым требуется следить
         [SerializeField] private float _smoothSpeed = 1f;
         [SerializeField] private Vector3 _offset = new Vector3(2f,12f);
         

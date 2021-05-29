@@ -19,7 +19,7 @@ namespace _Scripts
         /// <summary>
         /// Более мощный снаряд танка.
         /// </summary>
-        Rocket,
+        Rocket
     }
     
     /// <summary>
@@ -41,7 +41,7 @@ namespace _Scripts
     {
         private static Transform _projectileAnchor; // Пустой объект для корректного отображения снарядов иерархии 
         private PlayerShotController _playerShotController;
-        private Enemy _enemyShotController;
+        private MediumTank _enemyShotController;
 
         private float _lastShotTime; // Время последнего выстрела
         private WeaponDefinition _def; 
@@ -57,7 +57,7 @@ namespace _Scripts
             
             // Получить тип установленного оружия
             _playerShotController = gameObject.GetComponent<PlayerShotController>();
-            _enemyShotController = gameObject.GetComponent<Enemy>();
+            _enemyShotController = gameObject.GetComponent<MediumTank>();
             
             if (_playerShotController != null)
             {
@@ -120,16 +120,30 @@ namespace _Scripts
             }
         }
 
+        /// <summary>
+        /// Создает снаряд и задает ему основные свойства. 
+        /// </summary>
+        /// <returns>Снаряд.</returns>
         private Projectile MakeProjectile()
         {
             var go = Instantiate(_def.projectilePrefab, _projectileAnchor, true);
             
-            go.tag = "Projectile";
             go.GetComponent<Light>().color = _def.colorLight;
             go.transform.position = _muzzle.transform.position;
             go.transform.rotation = _muzzle.transform.rotation;
             
             var p = go.GetComponent<Projectile>();
+            
+            if (transform.gameObject.CompareTag("Enemy"))
+            {
+                go.tag = "ProjectileEnemy";
+                var multi = transform.gameObject.GetComponent<MediumTank>().multiplicationDamage;
+                p.multiplication = multi;
+            }
+            else
+            {
+                go.tag = "Projectile";
+            }
             
             p.Type = _def.type;
             _lastShotTime = Time.time;

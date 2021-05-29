@@ -6,7 +6,7 @@ namespace _Scripts
 {
     public class Main : MonoBehaviour
     {
-        static Dictionary<WeaponType, WeaponDefinition> WEAP_DICT;
+        private static Dictionary<WeaponType, WeaponDefinition> WEAP_DICT;
 
         [Header("Set weapon options:")]
         // Настройка свойст всех доступных типов оружий
